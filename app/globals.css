@@ -3,6 +3,15 @@
 :root {
   --background: #020617;
   --foreground: #e2e8f0;
+  --card-bg: rgba(15, 23, 42, 0.8);
+  --border-color: rgba(148, 163, 184, 0.1);
+}
+
+html.light {
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --border-color: rgba(148, 163, 184, 0.2);
 }
 
 @theme inline {
@@ -12,17 +21,57 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #020617;
-    --foreground: #e2e8f0;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: system-ui, -apple-system, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light mode styles */
+html.light body {
+  background: linear-gradient(to bottom, #f8fafc, #ffffff);
+}
+
+html.light .glass {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(15, 23, 42, 0.1);
+}
+
+html.light .text-slate-200 {
+  color: #1e293b;
+}
+
+html.light .text-slate-300 {
+  color: #334155;
+}
+
+html.light .text-slate-400 {
+  color: #475569;
+}
+
+html.light .text-white {
+  color: #0f172a;
+}
+
+html.light .bg-slate-950 {
+  background-color: #f8fafc;
+}
+
+html.light .bg-slate-900 {
+  background-color: #f1f5f9;
+}
+
+html.light .bg-slate-800 {
+  background-color: #e2e8f0;
+}
+
+html.light .border-slate-800 {
+  border-color: #cbd5e1;
+}
+
+html.light .border-slate-700 {
+  border-color: #94a3b8;
 }
 
 /* Smooth scrolling */
@@ -97,4 +146,98 @@ html {
 
 .animate-slideDown {
   animation: slideDown 0.3s ease-out;
+}
+
+/* Glass morphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-light {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Pulse glow effect */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(34, 211, 238, 0.8);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+/* Grid pattern background */
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(148, 163, 184, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* 3D card effect */
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+
+.card-3d:hover {
+  transform: rotateY(10deg) rotateX(10deg);
+}
+
+/* Shimmer effect */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Smooth transitions for all elements */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Hide Next.js/Turbopack dev indicator */
+#__next-build-watcher,
+[data-nextjs-toast-errors-parent],
+nextjs-portal {
+  display: none !important;
 }

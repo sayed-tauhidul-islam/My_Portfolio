@@ -1,19 +1,62 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Github, ExternalLink, Rocket, Briefcase, Globe, Zap, BookOpen, TrendingUp, ShoppingCart, Video, Shield, Heart } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Github, ExternalLink, Rocket, Briefcase, Globe, Zap, BookOpen, TrendingUp, ShoppingCart, Video, Shield, MessageSquare, Activity, Utensils } from 'lucide-react';
 import MouseTrail from '@/components/MouseTrail';
 import Navigation from '@/components/Navigation';
+import AnimatedBackground from '@/components/AnimatedBackground';
+import Footer from '@/components/Footer';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function Projects() {
+  const { t } = useLanguage();
   const [filter, setFilter] = useState('all');
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+
+  const categories = [
+    { id: 'all', label: t('projects.filter.all'), count: 15 },
+    { id: 'ai', label: 'AI & ML', count: 3 },
+    { id: 'saas', label: 'SaaS', count: 4 },
+    { id: 'web', label: t('projects.filter.web'), count: 8 }
+  ];
 
   const projects = [
+    {
+      title: "Personal Portfolio Website",
+      category: "web",
+      description: "Modern, responsive portfolio website with multi-language support (English, Bengali, Hindi), dark/light theme toggle, and stunning animations. Built with Next.js 15 and features glass morphism design, interactive mouse trails, and smooth page transitions.",
+      gradient: "from-purple-600 to-pink-400",
+      tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
+      github: "https://github.com/sayed-tauhidul-islam/My_Portfolio2",
+      live: "#",
+      icon: <Globe className="w-6 h-6" />
+    },
+    {
+      title: "Online Food Court",
+      category: "web",
+      description: "Complete online food ordering system with restaurant menus, cart functionality, order management, and user authentication. Features responsive design and MySQL database integration.",
+      gradient: "from-orange-600 to-red-400",
+      tags: ["HTML", "CSS", "JavaScript", "MySQL", "PHP"],
+      github: "https://github.com/sayed-tauhidul-islam/Online_Food_Court",
+      live: "#",
+      icon: <Utensils className="w-6 h-6" />
+    },
+    {
+      title: "Study Abroad Platform",
+      category: "web",
+      description: "Educational platform for international students with university listings, application management, course information, and student resources. Built with modern Laravel framework and Tailwind CSS.",
+      gradient: "from-blue-600 to-indigo-400",
+      tags: ["Laravel", "Tailwind CSS", "MySQL", "PHP", "JavaScript"],
+      github: "https://github.com/sayed-tauhidul-islam/Study_in_Abroad",
+      live: "#",
+      icon: <BookOpen className="w-6 h-6" />
+    },
     {
       title: "AI DocuChat SaaS",
       category: "ai",
       description: "Enterprise document analysis platform using RAG technology. Users upload PDFs and interact via intelligent chat. Built for 10K+ concurrent users with Redis caching and PostgreSQL.",
-      image: "from-blue-600 to-cyan-400",
+      gradient: "from-blue-600 to-cyan-400",
       tags: ["Python", "FastAPI", "OpenAI", "PostgreSQL", "Redis", "Docker"],
       github: "#",
       live: "#",
@@ -23,7 +66,7 @@ export default function Projects() {
       title: "TaskFlow Pro",
       category: "saas",
       description: "Real-time project management SaaS with Kanban boards, time tracking, team collaboration, and Stripe payment integration. Features real-time updates via WebSockets.",
-      image: "from-purple-600 to-pink-400",
+      gradient: "from-purple-600 to-pink-400",
       tags: ["React", "Next.js", "Laravel", "MySQL", "Tailwind", "Stripe"],
       github: "#",
       live: "#",
@@ -33,7 +76,7 @@ export default function Projects() {
       title: "E-Commerce Platform",
       category: "web",
       description: "Full-stack marketplace with vendor dashboard, inventory management, order tracking, payment gateway, and AWS S3 for image storage. Supports multiple vendors.",
-      image: "from-green-600 to-teal-400",
+      gradient: "from-green-600 to-teal-400",
       tags: ["PHP", "Laravel", "Vue.js", "MySQL", "Stripe", "AWS S3"],
       github: "#",
       live: "#",
@@ -43,7 +86,7 @@ export default function Projects() {
       title: "AI Content Generator",
       category: "ai",
       description: "Marketing content creation tool powered by GPT-4. Generates blog posts, social media content, SEO-optimized articles, and marketing copy with tone customization.",
-      image: "from-orange-600 to-yellow-400",
+      gradient: "from-orange-600 to-yellow-400",
       tags: ["TypeScript", "Node.js", "OpenAI", "MongoDB", "React", "Express"],
       github: "#",
       live: "#",
@@ -53,7 +96,7 @@ export default function Projects() {
       title: "Learning Management System",
       category: "web",
       description: "Complete LMS with course creation, student enrollment, video hosting, interactive quizzes, progress tracking, certificates, and payment processing.",
-      image: "from-red-600 to-pink-400",
+      gradient: "from-red-600 to-pink-400",
       tags: ["Python", "Django", "PostgreSQL", "Docker", "AWS", "Celery"],
       github: "#",
       live: "#",
@@ -61,9 +104,9 @@ export default function Projects() {
     },
     {
       title: "Analytics Dashboard",
-      category: "web",
+      category: "saas",
       description: "Real-time business intelligence dashboard with custom reporting, data visualization using D3.js, and export capabilities. Processes millions of data points.",
-      image: "from-indigo-600 to-blue-400",
+      gradient: "from-indigo-600 to-blue-400",
       tags: ["React", "D3.js", "Node.js", "GraphQL", "PostgreSQL", "Redis"],
       github: "#",
       live: "#",
@@ -73,7 +116,7 @@ export default function Projects() {
       title: "Video Streaming Platform",
       category: "web",
       description: "Netflix-like streaming service with video transcoding, adaptive bitrate streaming, user subscriptions, watch history, and recommendation engine.",
-      image: "from-pink-600 to-rose-400",
+      gradient: "from-pink-600 to-rose-400",
       tags: ["Next.js", "Node.js", "MongoDB", "AWS S3", "FFmpeg", "Stripe"],
       github: "#",
       live: "#",
@@ -82,19 +125,19 @@ export default function Projects() {
     {
       title: "Healthcare Portal",
       category: "web",
-      description: "HIPAA-compliant patient management system with appointment scheduling, medical records, telemedicine integration, and prescription management.",
-      image: "from-teal-600 to-cyan-400",
-      tags: ["React", "Laravel", "MySQL", "WebRTC", "AWS", "Docker"],
+      description: "HIPAA-compliant patient management system with appointment scheduling, telemedicine, electronic health records, prescription management, and secure messaging.",
+      gradient: "from-teal-600 to-green-400",
+      tags: ["React", "Node.js", "MongoDB", "WebRTC", "Socket.io", "AWS"],
       github: "#",
       live: "#",
-      icon: <Heart className="w-6 h-6" />
+      icon: <Activity className="w-6 h-6" />
     },
     {
       title: "Cybersecurity Dashboard",
-      category: "web",
-      description: "Network monitoring and threat detection system with real-time alerts, log analysis, vulnerability scanning, and compliance reporting.",
-      image: "from-slate-600 to-gray-400",
-      tags: ["Python", "FastAPI", "PostgreSQL", "Redis", "Elasticsearch", "Docker"],
+      category: "saas",
+      description: "Network security monitoring platform with threat detection, vulnerability scanning, real-time alerts, compliance reporting, and incident response automation.",
+      gradient: "from-red-600 to-orange-400",
+      tags: ["Python", "FastAPI", "PostgreSQL", "Redis", "React", "Docker"],
       github: "#",
       live: "#",
       icon: <Shield className="w-6 h-6" />
@@ -102,19 +145,19 @@ export default function Projects() {
     {
       title: "AI Chatbot Platform",
       category: "ai",
-      description: "White-label chatbot solution with natural language processing, multi-language support, sentiment analysis, and CRM integration using LangChain.",
-      image: "from-violet-600 to-purple-400",
-      tags: ["Python", "LangChain", "OpenAI", "FastAPI", "PostgreSQL", "React"],
+      description: "Conversational AI platform for businesses. Multi-language support, sentiment analysis, CRM integration, and analytics dashboard. Handles 1M+ conversations monthly.",
+      gradient: "from-cyan-600 to-blue-400",
+      tags: ["Python", "TensorFlow", "FastAPI", "MongoDB", "React", "Docker"],
       github: "#",
       live: "#",
-      icon: <Zap className="w-6 h-6" />
+      icon: <MessageSquare className="w-6 h-6" />
     },
     {
       title: "Social Media Dashboard",
       category: "saas",
       description: "Multi-platform social media management tool with post scheduling, analytics, engagement tracking, and AI-powered content suggestions.",
-      image: "from-blue-500 to-indigo-500",
-      tags: ["Next.js", "Node.js", "MongoDB", "Redis", "OpenAI", "Tailwind"],
+      gradient: "from-violet-600 to-purple-400",
+      tags: ["Next.js", "Node.js", "PostgreSQL", "Redis", "OpenAI", "Tailwind"],
       github: "#",
       live: "#",
       icon: <Globe className="w-6 h-6" />
@@ -122,20 +165,13 @@ export default function Projects() {
     {
       title: "Restaurant POS System",
       category: "web",
-      description: "Point of sale system for restaurants with table management, kitchen display system, inventory tracking, and reporting dashboard.",
-      image: "from-amber-600 to-orange-400",
-      tags: ["React", "Node.js", "PostgreSQL", "Socket.io", "Express", "PWA"],
+      description: "Point of sale system for restaurants with order management, kitchen display, inventory tracking, staff management, and sales analytics.",
+      gradient: "from-amber-600 to-orange-400",
+      tags: ["React", "Laravel", "MySQL", "Socket.io", "Tailwind", "Stripe"],
       github: "#",
       live: "#",
-      icon: <ShoppingCart className="w-6 h-6" />
+      icon: <Utensils className="w-6 h-6" />
     }
-  ];
-
-  const categories = [
-    { id: 'all', label: 'All Projects' },
-    { id: 'ai', label: 'AI & ML' },
-    { id: 'saas', label: 'SaaS' },
-    { id: 'web', label: 'Web Apps' }
   ];
 
   const filteredProjects = filter === 'all' 
@@ -143,105 +179,204 @@ export default function Projects() {
     : projects.filter(p => p.category === filter);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200">
+    <div className="min-h-screen text-slate-200 selection:bg-cyan-500 selection:text-cyan-900">
+      <AnimatedBackground />
       <MouseTrail />
       <Navigation />
       
-      {/* Hero Section */}
-      <section className="pt-32 pb-16 px-6">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-6">
-            My <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Projects</span>
-          </h1>
-          <p className="text-xl text-slate-400 max-w-3xl mx-auto">
-            A showcase of my work across web development, AI integration, and SaaS solutions. 
-            Each project represents a unique challenge and learning experience.
-          </p>
-        </div>
-      </section>
-
-      {/* Filter Tabs */}
-      <section className="pb-12 px-6">
+      <div className="pt-24 pb-20 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="flex gap-4 justify-center flex-wrap">
-            {categories.map((cat) => (
-              <button
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-16"
+          >
+            <motion.h1
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: "spring", duration: 0.8 }}
+              className="text-5xl md:text-6xl font-bold text-white mb-6"
+            >
+              {t('projects.title')}
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
+              className="text-slate-400 text-lg max-w-2xl mx-auto"
+            >
+              {t('projects.subtitle')}
+            </motion.p>
+          </motion.div>
+
+          {/* Filter Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="flex flex-wrap justify-center gap-4 mb-12"
+          >
+            {categories.map((cat, index) => (
+              <motion.button
                 key={cat.id}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.5 + index * 0.1 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => setFilter(cat.id)}
-                className={`px-6 py-2 rounded-full font-medium transition-all ${
+                className={`px-6 py-3 rounded-full font-medium transition-all ${
                   filter === cat.id
-                    ? 'bg-cyan-500 text-white'
-                    : 'bg-slate-900 text-slate-400 hover:text-cyan-400 border border-slate-800 hover:border-cyan-500/50'
+                    ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/50'
+                    : 'glass border border-slate-700 text-slate-400 hover:border-cyan-500/50 hover:text-cyan-400'
                 }`}
               >
-                {cat.label}
-              </button>
+                {cat.label} <span className="text-xs opacity-75">({cat.count})</span>
+              </motion.button>
             ))}
-          </div>
-        </div>
-      </section>
+          </motion.div>
 
-      {/* Projects Grid */}
-      <section className="pb-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProjects.map((project, index) => (
-              <div 
-                key={index}
-                className="group relative rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden hover:border-cyan-500/50 transition-all transform hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20"
-              >
-                <div className={`h-48 bg-gradient-to-br ${project.image} flex items-center justify-center relative overflow-hidden`}>
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all" />
-                  <div className="relative text-white z-10">
-                    {project.icon}
-                  </div>
-                </div>
-                <div className="p-6">
-                  <div className="flex justify-between items-start mb-4">
-                    <h3 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">
+          {/* Projects Grid */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={filter}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.3 }}
+              className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+              {filteredProjects.map((project, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ y: -10 }}
+                  onHoverStart={() => setHoveredCard(index)}
+                  onHoverEnd={() => setHoveredCard(null)}
+                  className="group relative"
+                >
+                  {/* Card */}
+                  <div className="relative h-full p-6 rounded-2xl glass border border-slate-800 hover:border-cyan-500/50 transition-all overflow-hidden">
+                    {/* Background Gradient */}
+                    <motion.div
+                      animate={{
+                        scale: hoveredCard === index ? 1.2 : 1,
+                        opacity: hoveredCard === index ? 0.2 : 0.1,
+                      }}
+                      className={`absolute inset-0 bg-gradient-to-br ${project.gradient} blur-3xl -z-10`}
+                    />
+
+                    {/* Icon */}
+                    <motion.div
+                      whileHover={{ rotate: 360, scale: 1.1 }}
+                      transition={{ duration: 0.6 }}
+                      className={`w-14 h-14 rounded-xl bg-gradient-to-br ${project.gradient} flex items-center justify-center text-white mb-4 shadow-lg`}
+                    >
+                      {project.icon}
+                    </motion.div>
+
+                    {/* Title */}
+                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">
                       {project.title}
                     </h3>
-                    <div className="flex gap-2">
-                      <a 
-                        href={project.github} 
-                        className="p-2 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-all" 
-                        aria-label="GitHub Repo"
-                      >
-                        <Github className="w-4 h-4" />
-                      </a>
-                      <a 
-                        href={project.live} 
-                        className="p-2 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-all" 
-                        aria-label="Live Demo"
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                      </a>
-                    </div>
-                  </div>
-                  <p className="text-slate-400 mb-4 text-sm leading-relaxed">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag, i) => (
-                      <span 
-                        key={i} 
-                        className="px-3 py-1 text-xs rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* Footer */}
-      <footer className="py-8 text-center text-slate-600 text-sm border-t border-slate-900">
-        <p>© 2025 Tauhidul. Built with Next.js & Tailwind CSS.</p>
-      </footer>
+                    {/* Description */}
+                    <p className="text-slate-400 text-sm mb-4 line-clamp-3">
+                      {project.description}
+                    </p>
+
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.tags.slice(0, 4).map((tag, i) => (
+                        <motion.span
+                          key={i}
+                          whileHover={{ scale: 1.1 }}
+                          className="px-3 py-1 rounded-full glass text-xs text-cyan-400 border border-slate-700"
+                        >
+                          {tag}
+                        </motion.span>
+                      ))}
+                      {project.tags.length > 4 && (
+                        <span className="px-3 py-1 rounded-full glass text-xs text-slate-500">
+                          +{project.tags.length - 4}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Links */}
+                    <div className="flex gap-3">
+                      <motion.a
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 px-4 py-2 rounded-lg glass border border-slate-700 hover:border-cyan-500 text-white text-sm font-medium transition-all flex items-center justify-center gap-2 group/btn"
+                      >
+                        <Github className="w-4 h-4 group-hover/btn:rotate-12 transition-transform" />
+                        {t('projects.viewCode')}
+                      </motion.a>
+                      <motion.a
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        href={project.live !== '#' ? project.live : project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white text-sm font-medium transition-all flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/30 group/btn"
+                      >
+                        <ExternalLink className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                        {project.live !== '#' ? t('projects.viewProject') : t('projects.viewCode')}
+                      </motion.a>
+                    </div>
+
+                    {/* Hover Shimmer Effect */}
+                    <motion.div
+                      initial={{ x: '-100%' }}
+                      animate={{ x: hoveredCard === index ? '200%' : '-100%' }}
+                      transition={{ duration: 0.6 }}
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none"
+                    />
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+
+          {/* No Results */}
+          {filteredProjects.length === 0 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center py-20"
+            >
+              <p className="text-slate-400 text-lg">No projects found in this category.</p>
+            </motion.div>
+          )}
+
+          {/* CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-20 text-center"
+          >
+            <p className="text-slate-400 mb-6">Interested in working together?</p>
+            <motion.a
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              href="/contact"
+              className="inline-block px-8 py-4 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white font-bold transition-all shadow-lg shadow-cyan-500/50"
+            >
+              Let&apos;s Talk
+            </motion.a>
+          </motion.div>
+        </div>
+      </div>
+
+      <Footer />
     </div>
   );
 }

@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Twitter, Mail, Heart, ArrowUp } from 'lucide-react';
+import { Github, Linkedin, Facebook, Mail, Heart, ArrowUp } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
 const Footer = () => {
@@ -28,33 +28,36 @@ const Footer = () => {
       { label: t('footer.services.consulting') }
     ],
     social: [
-      { icon: <Github className="w-5 h-5" />, href: 'https://github.com/Tauhidul487', label: 'GitHub' },
+      { icon: <Github className="w-5 h-5" />, href: 'https://github.com/sayed-tauhidul-islam', label: 'GitHub' },
       { icon: <Linkedin className="w-5 h-5" />, href: 'https://www.linkedin.com/in/sayed-tauhidul-islam-078554326', label: 'LinkedIn' },
-      { icon: <Twitter className="w-5 h-5" />, href: 'https://www.facebook.com/Touhidulislam.104568/', label: 'Facebook' },
+      { icon: <Facebook className="w-5 h-5" />, href: 'https://www.facebook.com/Touhidulislam.104568/', label: 'Facebook' },
       { icon: <Mail className="w-5 h-5" />, href: 'mailto:tauhidulislam104568@gmail.com', label: 'Email' }
     ]
   };
 
   return (
-    <footer className="relative border-t border-slate-800/50 bg-slate-950/50 backdrop-blur-xl">
+    <footer className="relative isolate overflow-hidden border-t border-slate-800/60 bg-slate-950/80 backdrop-blur-xl">
+      <div aria-hidden="true" className="absolute inset-x-0 top-0 -z-10 h-48 bg-gradient-to-b from-cyan-500/[0.08] via-blue-500/[0.04] to-transparent" />
+      <div aria-hidden="true" className="absolute left-1/2 top-0 -z-10 h-px w-2/3 -translate-x-1/2 bg-gradient-to-r from-transparent via-cyan-400/60 to-transparent" />
       {/* Scroll to Top Button */}
       <motion.button
         onClick={scrollToTop}
+        aria-label="Scroll to top"
         whileHover={{ scale: 1.1, y: -2 }}
         whileTap={{ scale: 0.9 }}
-        className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 flex items-center justify-center text-white shadow-lg shadow-cyan-500/50 hover:shadow-cyan-500/70 transition-all"
+        className="absolute -top-5 left-1/2 z-10 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full border border-white/10 bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/30 transition-shadow hover:shadow-cyan-500/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
       >
         <ArrowUp className="w-5 h-5" />
       </motion.button>
 
       <div className="max-w-7xl mx-auto px-6 pt-16 pb-8">
-        <div className="grid md:grid-cols-4 gap-12 mb-12">
+        <div className="grid gap-10 pb-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12">
           {/* Brand Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="md:col-span-1"
+            className="sm:col-span-2 lg:col-span-1"
           >
             <Link href="/" className="inline-block mb-4">
               <motion.h3
@@ -76,7 +79,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.2, rotate: 5 }}
                   whileTap={{ scale: 0.9 }}
-                  className="w-10 h-10 rounded-lg glass border border-slate-800 hover:border-cyan-500/50 flex items-center justify-center text-slate-400 hover:text-cyan-400 transition-all"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-800/80 bg-slate-900/60 text-slate-400 transition-colors hover:border-cyan-400/50 hover:bg-cyan-400/10 hover:text-cyan-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
                   aria-label={social.label}
                 >
                   {social.icon}
@@ -98,7 +101,7 @@ const Footer = () => {
                 <li key={index}>
                   <Link
                     href={link.href}
-                    className="text-slate-400 hover:text-cyan-400 transition-colors text-sm block hover:translate-x-1 transform transition-transform"
+                    className="block text-sm text-slate-400 transition duration-200 hover:translate-x-1 hover:text-cyan-300 focus-visible:text-cyan-300 focus-visible:outline-none"
                   >
                     {link.label}
                   </Link>
@@ -136,26 +139,22 @@ const Footer = () => {
               <li>
                 <a
                   href="mailto:tauhidulislam104568@gmail.com"
-                  className="text-slate-400 hover:text-cyan-400 transition-colors block"
+                  className="block break-all text-slate-400 transition-colors hover:text-cyan-300 focus-visible:text-cyan-300"
                 >
                   tauhidulislam104568@gmail.com
                 </a>
               </li>
               <li className="text-slate-400">
-                Dhaka, Bangladesh
+              Khulna, Bangladesh
               </li>
               <li className="text-slate-400">
                 Available for freelance
               </li>
             </ul>
             <Link href="/contact">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="mt-4 px-6 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white text-sm font-medium transition-all shadow-lg shadow-cyan-500/30"
-              >
+              <span className="mt-4 inline-flex rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition-all hover:from-cyan-400 hover:to-blue-400 hover:shadow-cyan-500/40">
                 {t('footer.contact.cta')}
-              </motion.button>
+              </span>
             </Link>
           </motion.div>
         </div>
@@ -166,7 +165,7 @@ const Footer = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
-          className="pt-8 border-t border-slate-800/50 flex flex-col md:flex-row justify-between items-center gap-4"
+          className="flex flex-col items-center justify-between gap-3 border-t border-slate-800/60 pt-6 text-center sm:flex-row sm:text-left"
         >
           <p className="text-slate-400 text-sm text-center md:text-left">
             © {new Date().getFullYear()} Tauhidul. {t('footer.copyright')}

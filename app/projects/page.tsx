@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Github, ExternalLink, Rocket, Briefcase, Globe, Zap, BookOpen, TrendingUp, ShoppingCart, Video, Shield, MessageSquare, Activity, Utensils } from 'lucide-react';
+import { Github, ExternalLink, Rocket, Globe, Zap, BookOpen, ShoppingCart, Activity, Utensils } from 'lucide-react';
 import MouseTrail from '@/components/MouseTrail';
 import Navigation from '@/components/Navigation';
 import AnimatedBackground from '@/components/AnimatedBackground';
@@ -14,164 +14,28 @@ export default function Projects() {
   const [filter, setFilter] = useState('all');
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
-  const categories = [
-    { id: 'all', label: t('projects.filter.all'), count: 15 },
-    { id: 'ai', label: 'AI & ML', count: 3 },
-    { id: 'saas', label: 'SaaS', count: 4 },
-    { id: 'web', label: t('projects.filter.web'), count: 8 }
+  const projects = [
+    { title: "PaperMind-AI", category: "ai", description: "AI-assisted research paper analysis project for understanding papers and research faster.", gradient: "from-blue-600 to-cyan-400", tags: ["Python", "AI", "Research"], github: "https://github.com/sayed-tauhidul-islam/PaperMind-AI", live: "#", icon: <BookOpen className="w-6 h-6" /> },
+    { title: "Smart-Farmer-AI", category: "ai", description: "AI project focused on helping farmers make smarter decisions.", gradient: "from-green-600 to-teal-400", tags: ["TypeScript", "AI", "Agriculture"], github: "https://github.com/sayed-tauhidul-islam/Smart-Farmer-AI", live: "#", icon: <Rocket className="w-6 h-6" /> },
+    { title: "AURA_AI", category: "ai", description: "Voice-enabled, context-aware personal AI assistant for desktop workflows and task automation.", gradient: "from-violet-600 to-purple-400", tags: ["Python", "AI", "Voice Assistant"], github: "https://github.com/sayed-tauhidul-islam/AURA_AI", live: "#", icon: <Zap className="w-6 h-6" /> },
+    { title: "LIFE-PILOT-AI", category: "ai", description: "AI-powered personal finance and productivity assistant with a multilingual interface.", gradient: "from-cyan-600 to-blue-400", tags: ["Laravel", "PHP", "MongoDB", "AI"], github: "https://github.com/sayed-tauhidul-islam/LIFE-PILOT-AI", live: "#", icon: <Activity className="w-6 h-6" /> },
+    { title: "Student-Daily-Portal", category: "web", description: "Personalized student dashboard for schedules, assignments, attendance, results, and academic activities.", gradient: "from-blue-600 to-indigo-400", tags: ["Blade", "Student Portal"], github: "https://github.com/sayed-tauhidul-islam/Student-Daily-Portal", live: "#", icon: <BookOpen className="w-6 h-6" /> },
+    { title: "RJ-Mart", category: "web", description: "A multi-vendor e-commerce platform.", gradient: "from-orange-600 to-red-400", tags: ["E-commerce", "Multi-vendor"], github: "https://github.com/sayed-tauhidul-islam/RJ-Mart", live: "#", icon: <ShoppingCart className="w-6 h-6" /> },
+    { title: "Edu_Sphere", category: "web", description: "Education-focused web project.", gradient: "from-indigo-600 to-blue-400", tags: ["PHP", "Education"], github: "https://github.com/sayed-tauhidul-islam/Edu_Sphere", live: "#", icon: <BookOpen className="w-6 h-6" /> },
+    { title: "Study_in_Abroad", category: "web", description: "A platform to help students explore study-abroad opportunities.", gradient: "from-blue-600 to-indigo-400", tags: ["Laravel", "PHP"], github: "https://github.com/sayed-tauhidul-islam/Study_in_Abroad", live: "#", icon: <Globe className="w-6 h-6" /> },
+    { title: "Online_Food_Court", category: "web", description: "Online food ordering project.", gradient: "from-amber-600 to-orange-400", tags: ["PHP", "MySQL", "Food Ordering"], github: "https://github.com/sayed-tauhidul-islam/Online_Food_Court", live: "#", icon: <Utensils className="w-6 h-6" /> },
+    { title: "weather_forcast", category: "web", description: "A weather forecast application.", gradient: "from-cyan-600 to-blue-400", tags: ["JavaScript", "Weather"], github: "https://github.com/sayed-tauhidul-islam/weather_forcast", live: "#", icon: <Globe className="w-6 h-6" /> },
+    { title: "research_AI", category: "ai", description: "AI-focused research project.", gradient: "from-purple-600 to-pink-400", tags: ["Python", "AI", "Research"], github: "https://github.com/sayed-tauhidul-islam/research_AI", live: "#", icon: <Rocket className="w-6 h-6" /> },
+    { title: "skills-copilot-codespaces-vscode", category: "web", description: "A GitHub Codespaces and VS Code skills project.", gradient: "from-blue-600 to-cyan-400", tags: ["GitHub", "VS Code"], github: "https://github.com/sayed-tauhidul-islam/skills-copilot-codespaces-vscode", live: "#", icon: <Zap className="w-6 h-6" /> },
+    { title: "tauhid-creative", category: "web", description: "Creative project repository (private on GitHub).", gradient: "from-violet-600 to-purple-400", tags: ["TypeScript", "Private repo"], github: "https://github.com/sayed-tauhidul-islam/tauhid-creative", live: "#", icon: <Globe className="w-6 h-6" /> },
+    { title: "react-portfolio", category: "web", description: "React portfolio project repository (private on GitHub).", gradient: "from-purple-600 to-pink-400", tags: ["JavaScript", "React", "Private repo"], github: "https://github.com/sayed-tauhidul-islam/react-portfolio", live: "#", icon: <Globe className="w-6 h-6" /> },
+    { title: "Portfolio Website", category: "web", description: "Personal portfolio website repository.", gradient: "from-purple-600 to-pink-400", tags: ["Portfolio", "GitHub Pages"], github: "https://github.com/sayed-tauhidul-islam/sayed-tauhidul-islam.github.io", live: "https://sayed-tauhidul-islam.github.io", icon: <Globe className="w-6 h-6" /> },
   ];
 
-  const projects = [
-    {
-      title: "Personal Portfolio Website",
-      category: "web",
-      description: "Modern, responsive portfolio website with multi-language support (English, Bengali, Hindi), dark/light theme toggle, and stunning animations. Built with Next.js 15 and features glass morphism design, interactive mouse trails, and smooth page transitions.",
-      gradient: "from-purple-600 to-pink-400",
-      tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
-      github: "https://github.com/sayed-tauhidul-islam/My_Portfolio2",
-      live: "#",
-      icon: <Globe className="w-6 h-6" />
-    },
-    {
-      title: "Online Food Court",
-      category: "web",
-      description: "Complete online food ordering system with restaurant menus, cart functionality, order management, and user authentication. Features responsive design and MySQL database integration.",
-      gradient: "from-orange-600 to-red-400",
-      tags: ["HTML", "CSS", "JavaScript", "MySQL", "PHP"],
-      github: "https://github.com/sayed-tauhidul-islam/Online_Food_Court",
-      live: "#",
-      icon: <Utensils className="w-6 h-6" />
-    },
-    {
-      title: "Study Abroad Platform",
-      category: "web",
-      description: "Educational platform for international students with university listings, application management, course information, and student resources. Built with modern Laravel framework and Tailwind CSS.",
-      gradient: "from-blue-600 to-indigo-400",
-      tags: ["Laravel", "Tailwind CSS", "MySQL", "PHP", "JavaScript"],
-      github: "https://github.com/sayed-tauhidul-islam/Study_in_Abroad",
-      live: "#",
-      icon: <BookOpen className="w-6 h-6" />
-    },
-    {
-      title: "AI DocuChat SaaS",
-      category: "ai",
-      description: "Enterprise document analysis platform using RAG technology. Users upload PDFs and interact via intelligent chat. Built for 10K+ concurrent users with Redis caching and PostgreSQL.",
-      gradient: "from-blue-600 to-cyan-400",
-      tags: ["Python", "FastAPI", "OpenAI", "PostgreSQL", "Redis", "Docker"],
-      github: "#",
-      live: "#",
-      icon: <Rocket className="w-6 h-6" />
-    },
-    {
-      title: "TaskFlow Pro",
-      category: "saas",
-      description: "Real-time project management SaaS with Kanban boards, time tracking, team collaboration, and Stripe payment integration. Features real-time updates via WebSockets.",
-      gradient: "from-purple-600 to-pink-400",
-      tags: ["React", "Next.js", "Laravel", "MySQL", "Tailwind", "Stripe"],
-      github: "#",
-      live: "#",
-      icon: <Briefcase className="w-6 h-6" />
-    },
-    {
-      title: "E-Commerce Platform",
-      category: "web",
-      description: "Full-stack marketplace with vendor dashboard, inventory management, order tracking, payment gateway, and AWS S3 for image storage. Supports multiple vendors.",
-      gradient: "from-green-600 to-teal-400",
-      tags: ["PHP", "Laravel", "Vue.js", "MySQL", "Stripe", "AWS S3"],
-      github: "#",
-      live: "#",
-      icon: <ShoppingCart className="w-6 h-6" />
-    },
-    {
-      title: "AI Content Generator",
-      category: "ai",
-      description: "Marketing content creation tool powered by GPT-4. Generates blog posts, social media content, SEO-optimized articles, and marketing copy with tone customization.",
-      gradient: "from-orange-600 to-yellow-400",
-      tags: ["TypeScript", "Node.js", "OpenAI", "MongoDB", "React", "Express"],
-      github: "#",
-      live: "#",
-      icon: <Zap className="w-6 h-6" />
-    },
-    {
-      title: "Learning Management System",
-      category: "web",
-      description: "Complete LMS with course creation, student enrollment, video hosting, interactive quizzes, progress tracking, certificates, and payment processing.",
-      gradient: "from-red-600 to-pink-400",
-      tags: ["Python", "Django", "PostgreSQL", "Docker", "AWS", "Celery"],
-      github: "#",
-      live: "#",
-      icon: <BookOpen className="w-6 h-6" />
-    },
-    {
-      title: "Analytics Dashboard",
-      category: "saas",
-      description: "Real-time business intelligence dashboard with custom reporting, data visualization using D3.js, and export capabilities. Processes millions of data points.",
-      gradient: "from-indigo-600 to-blue-400",
-      tags: ["React", "D3.js", "Node.js", "GraphQL", "PostgreSQL", "Redis"],
-      github: "#",
-      live: "#",
-      icon: <TrendingUp className="w-6 h-6" />
-    },
-    {
-      title: "Video Streaming Platform",
-      category: "web",
-      description: "Netflix-like streaming service with video transcoding, adaptive bitrate streaming, user subscriptions, watch history, and recommendation engine.",
-      gradient: "from-pink-600 to-rose-400",
-      tags: ["Next.js", "Node.js", "MongoDB", "AWS S3", "FFmpeg", "Stripe"],
-      github: "#",
-      live: "#",
-      icon: <Video className="w-6 h-6" />
-    },
-    {
-      title: "Healthcare Portal",
-      category: "web",
-      description: "HIPAA-compliant patient management system with appointment scheduling, telemedicine, electronic health records, prescription management, and secure messaging.",
-      gradient: "from-teal-600 to-green-400",
-      tags: ["React", "Node.js", "MongoDB", "WebRTC", "Socket.io", "AWS"],
-      github: "#",
-      live: "#",
-      icon: <Activity className="w-6 h-6" />
-    },
-    {
-      title: "Cybersecurity Dashboard",
-      category: "saas",
-      description: "Network security monitoring platform with threat detection, vulnerability scanning, real-time alerts, compliance reporting, and incident response automation.",
-      gradient: "from-red-600 to-orange-400",
-      tags: ["Python", "FastAPI", "PostgreSQL", "Redis", "React", "Docker"],
-      github: "#",
-      live: "#",
-      icon: <Shield className="w-6 h-6" />
-    },
-    {
-      title: "AI Chatbot Platform",
-      category: "ai",
-      description: "Conversational AI platform for businesses. Multi-language support, sentiment analysis, CRM integration, and analytics dashboard. Handles 1M+ conversations monthly.",
-      gradient: "from-cyan-600 to-blue-400",
-      tags: ["Python", "TensorFlow", "FastAPI", "MongoDB", "React", "Docker"],
-      github: "#",
-      live: "#",
-      icon: <MessageSquare className="w-6 h-6" />
-    },
-    {
-      title: "Social Media Dashboard",
-      category: "saas",
-      description: "Multi-platform social media management tool with post scheduling, analytics, engagement tracking, and AI-powered content suggestions.",
-      gradient: "from-violet-600 to-purple-400",
-      tags: ["Next.js", "Node.js", "PostgreSQL", "Redis", "OpenAI", "Tailwind"],
-      github: "#",
-      live: "#",
-      icon: <Globe className="w-6 h-6" />
-    },
-    {
-      title: "Restaurant POS System",
-      category: "web",
-      description: "Point of sale system for restaurants with order management, kitchen display, inventory tracking, staff management, and sales analytics.",
-      gradient: "from-amber-600 to-orange-400",
-      tags: ["React", "Laravel", "MySQL", "Socket.io", "Tailwind", "Stripe"],
-      github: "#",
-      live: "#",
-      icon: <Utensils className="w-6 h-6" />
-    }
+  const categories = [
+    { id: 'all', label: t('projects.filter.all'), count: projects.length },
+    { id: 'ai', label: 'AI & ML', count: projects.filter(p => p.category === 'ai').length },
+    { id: 'web', label: t('projects.filter.web'), count: projects.filter(p => p.category === 'web').length }
   ];
 
   const filteredProjects = filter === 'all' 
